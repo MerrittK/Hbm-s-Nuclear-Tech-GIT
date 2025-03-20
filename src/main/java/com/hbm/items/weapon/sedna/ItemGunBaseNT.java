@@ -1,17 +1,23 @@
 package com.hbm.items.weapon.sedna;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
 import com.hbm.config.GeneralConfig;
 import com.hbm.handler.HbmKeybinds.EnumKeybind;
 import com.hbm.interfaces.IItemHUD;
+import com.hbm.inventory.RecipesCommon.ComparableStack;
+import com.hbm.inventory.gui.GUIWeaponTable;
 import com.hbm.items.IEquipReceiver;
 import com.hbm.items.IKeybindReceiver;
 import com.hbm.items.weapon.sedna.hud.IHUDComponent;
 import com.hbm.items.weapon.sedna.mags.IMagazine;
+import com.hbm.items.weapon.sedna.mods.WeaponModManager;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.PacketDispatcher;
@@ -48,6 +54,10 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 	public double shotRand = 0D;
 	
 	public static List<Item> secrets = new ArrayList();
+	public List<ComparableStack> recognizedMods = new ArrayList();
+	
+	public static final DecimalFormatSymbols SYMBOLS_US = new DecimalFormatSymbols(Locale.US);
+	public static final DecimalFormat FORMAT_DMG = new DecimalFormat("#.##", SYMBOLS_US);
 
 	public static float recoilVertical = 0;
 	public static float recoilHorizontal = 0;
@@ -97,7 +107,8 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 	
 	public GunConfig getConfig(ItemStack stack, int index) {
 		GunConfig cfg = configs_DNA[index];
-		return WeaponUpgradeManager.eval(cfg, stack, O_GUNCONFIG + index, this);
+		if(stack == null) return cfg;
+		return WeaponModManager.eval(cfg, stack, O_GUNCONFIG + index, this, index);
 	}
 	
 	public int getConfigCount() {
@@ -109,6 +120,7 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 		this.configs_DNA = cfg;
 		this.quality = quality;
 		this.lastShot = new long[cfg.length];
+		for(int i = 0; i < cfg.length; i++) cfg[i].index = i;
 		if(quality == WeaponQuality.A_SIDE || quality == WeaponQuality.SPECIAL) this.setCreativeTab(MainRegistry.weaponTab);
 		if(quality == WeaponQuality.LEGENDARY || quality == WeaponQuality.SECRET) this.secrets.add(this);
 		this.setTextureName(RefStrings.MODID + ":gun_darter");
@@ -141,11 +153,15 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 				IMagazine mag = rec.getMagazine(stack);
 				list.add("Ammo: " + mag.getIconForHUD(stack, player).getDisplayName() + " " + mag.reportAmmoStateForHUD(stack, player));
 				float dmg = rec.getBaseDamage(stack);
-				list.add("Base Damage: " + dmg);
+				list.add("Base Damage: " + FORMAT_DMG.format(dmg));
 				if(mag.getType(stack, player.inventory) instanceof BulletConfig) {
 					BulletConfig bullet = (BulletConfig) mag.getType(stack, player.inventory);
-					list.add("Damage with current ammo: " + dmg * bullet.damageMult + (bullet.projectilesMin > 1 ? (" x" + (bullet.projectilesMin != bullet.projectilesMax ? (bullet.projectilesMin + "-" + bullet.projectilesMax) : bullet.projectilesMin)) : ""));
+					list.add("Damage with current ammo: " + FORMAT_DMG.format(dmg * bullet.damageMult) + (bullet.projectilesMin > 1 ? (" x" + (bullet.projectilesMin != bullet.projectilesMax ? (bullet.projectilesMin + "-" + bullet.projectilesMax) : bullet.projectilesMin)) : ""));
 				}
+			}
+			
+			for(ItemStack upgrade : WeaponModManager.getUpgradeItems(stack, i)) {
+				list.add(EnumChatFormatting.YELLOW + upgrade.getDisplayName());
 			}
 		}
 		
@@ -156,6 +172,11 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 		case SPECIAL: list.add(EnumChatFormatting.AQUA + "Special Weapon"); break;
 		case SECRET: list.add((BobMathUtil.getBlink() ? EnumChatFormatting.DARK_RED : EnumChatFormatting.RED) + "SECRET"); break;
 		case DEBUG: list.add((BobMathUtil.getBlink() ? EnumChatFormatting.YELLOW : EnumChatFormatting.GOLD) + "DEBUG"); break;
+		}
+		
+		if(Minecraft.getMinecraft().currentScreen instanceof GUIWeaponTable) {
+			list.add(EnumChatFormatting.RED + "Accepts:");
+			for(ComparableStack comp : this.recognizedMods) list.add(EnumChatFormatting.RED + "  " + comp.toStack().getDisplayName());
 		}
 	}
 	
@@ -262,6 +283,7 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 				}
 			}
 			this.setIsAiming(stack, false);
+			this.setReloadCancel(stack, false);
 			return;
 		}
 		
