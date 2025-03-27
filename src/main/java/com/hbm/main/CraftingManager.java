@@ -66,12 +66,10 @@ public class CraftingManager {
 
 		GameRegistry.addRecipe(new RBMKFuelCraftingHandler());
 		GameRegistry.addRecipe(new MKUCraftingHandler());
-		GameRegistry.addRecipe(new ToolboxCraftingHandler());
 		GameRegistry.addRecipe(new CargoShellCraftingHandler());
 		GameRegistry.addRecipe(new ScrapsCraftingHandler());
 
 		RecipeSorter.register("hbm:rbmk", RBMKFuelCraftingHandler.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
-		RecipeSorter.register("hbm:toolbox", ToolboxCraftingHandler.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 		RecipeSorter.register("hbm:cargo", CargoShellCraftingHandler.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 		RecipeSorter.register("hbm:scraps", ScrapsCraftingHandler.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
 		RecipeSorter.register("hbm:mku", MKUCraftingHandler.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped before:minecraft:shapeless");
@@ -214,7 +212,7 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(ModItems.cbt_device, 1), new Object[] { STEEL.bolt(), ModItems.wrench });
 
 		addShapelessAuto(new ItemStack(ModItems.toothpicks, 3), new Object[] { KEY_STICK, KEY_STICK, KEY_STICK });
-		addRecipeAuto(new ItemStack(ModItems.ducttape, 6), new Object[] { "FSF", "SPS", "FSF", 'F', Items.string, 'S', KEY_SLIME, 'P', Items.paper });
+		addRecipeAuto(new ItemStack(ModItems.ducttape, 4), new Object[] { "F", "P", "S", 'F', Items.string, 'S', KEY_SLIME, 'P', Items.paper });
 
 		addRecipeAuto(new ItemStack(ModBlocks.radio_torch_sender, 4), new Object[] { "G", "R", "I", 'G', "dustGlowstone", 'R', Blocks.redstone_torch, 'I', NETHERQUARTZ.gem() });
 		addRecipeAuto(new ItemStack(ModBlocks.radio_torch_receiver, 4), new Object[] { "G", "R", "I", 'G', "dustGlowstone", 'R', Blocks.redstone_torch, 'I', IRON.ingot() });
@@ -352,14 +350,6 @@ public class CraftingManager {
 			addRecipeAuto(new ItemStack(ModItems.stamp_obsidian_flat, 1), new Object[] { "III", "SSS", 'I', brick, 'S', Blocks.obsidian });
 			addRecipeAuto(new ItemStack(ModItems.stamp_desh_flat, 1), new Object[] { "BDB", "DSD", "BDB", 'B', brick, 'D', DESH.ingot(), 'S', FERRO.ingot() });
 		}
-
-		addRecipeAuto(new ItemStack(ModItems.mechanism_revolver_1, 1), new Object[] { "ICI", "CAC", "ICI", 'I', IRON.plate(), 'C', CU.ingot(), 'A', AL.ingot() });
-		addRecipeAuto(new ItemStack(ModItems.mechanism_revolver_2, 1), new Object[] { "ATA", "TDT", "ATA", 'A', ALLOY.plate(), 'T', W.ingot(), 'D', DURA.ingot() });
-		addRecipeAuto(new ItemStack(ModItems.mechanism_rifle_1, 1), new Object[] { "ICI", "MAM", "ICI", 'I', IRON.plate(), 'C', CU.ingot(), 'A', AL.ingot(), 'M', ModItems.mechanism_revolver_1 });
-		addRecipeAuto(new ItemStack(ModItems.mechanism_rifle_2, 1), new Object[] { "ATA", "MDM", "ATA", 'A', ALLOY.plate(), 'T', W.ingot(), 'D', DURA.ingot(), 'M', ModItems.mechanism_revolver_2 });
-		addRecipeAuto(new ItemStack(ModItems.mechanism_launcher_1, 1), new Object[] { "TTT", "SSS", "BBI", 'T', TI.plate(), 'S', STEEL.ingot(), 'B', W.bolt(), 'I', MINGRADE.ingot() });
-		addRecipeAuto(new ItemStack(ModItems.mechanism_launcher_2, 1), new Object[] { "TTT", "SSS", "BBI", 'T', ALLOY.plate(), 'S', ANY_PLASTIC.ingot(), 'B', W.bolt(), 'I', DESH.ingot() });
-		addRecipeAuto(new ItemStack(ModItems.mechanism_special, 1), new Object[] { "PCI", "ISS", "PCI", 'P', ModItems.plate_desh, 'C', ModItems.coil_advanced_alloy, 'I', STAR.ingot(), 'S', DictFrame.fromOne(ModItems.circuit, EnumCircuitType.ADVANCED) });
 
 		addRecipeAuto(new ItemStack(ModBlocks.watz_pump, 1), new Object[] { "MPM", "PCP", "PSP", 'M', ModItems.motor_desh, 'P', ANY_RESISTANTALLOY.plateCast(), 'C', DictFrame.fromOne(ModItems.circuit, EnumCircuitType.BISMOID), 'S', ModItems.pipes_steel });
 
@@ -742,7 +732,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModBlocks.dfc_emitter, 1), new Object[] { "SDS", "TXL", "SDS", 'S', OSMIRIDIUM.plateWelded(), 'D', ModItems.plate_desh, 'T', ModBlocks.machine_transformer_dnt, 'X', ModItems.crystal_xen, 'L', ModItems.sat_head_laser });
 		addRecipeAuto(new ItemStack(ModBlocks.dfc_receiver, 1), new Object[] { "SDS", "TXL", "SDS", 'S', OSMIRIDIUM.plateWelded(), 'D', ModItems.plate_desh, 'T', ModBlocks.machine_transformer_dnt, 'X', ModBlocks.block_dineutronium, 'L', STEEL.shell() });
 		addRecipeAuto(new ItemStack(ModBlocks.dfc_injector, 1), new Object[] { "SDS", "TXL", "SDS", 'S', OSMIRIDIUM.plateWelded(), 'D', CMB.plate(), 'T', ModBlocks.machine_fluidtank, 'X', ModItems.motor, 'L', ModItems.pipes_steel });
-		addRecipeAuto(new ItemStack(ModBlocks.dfc_stabilizer, 1), new Object[] { "SDS", "TXL", "SDS", 'S', OSMIRIDIUM.plateWelded(), 'D', ModItems.plate_desh, 'T', ModItems.singularity_spark, 'X', ModItems.magnet_circular, 'L', ModItems.crystal_xen });
+		addRecipeAuto(new ItemStack(ModBlocks.dfc_stabilizer, 1), new Object[] { "SDS", "TXL", "SDS", 'S', OSMIRIDIUM.plateWelded(), 'D', ModItems.plate_desh, 'T', ModItems.singularity_spark, 'X', ModBlocks.fusion_conductor, 'L', ModItems.crystal_xen });
 		addRecipeAuto(new ItemStack(ModBlocks.barrel_plastic, 1), new Object[] { "IPI", "I I", "IPI", 'I', ModItems.plate_polymer, 'P', AL.plate() });
 		addRecipeAuto(new ItemStack(ModBlocks.barrel_iron, 1), new Object[] { "IPI", "I I", "IPI", 'I', IRON.plate(), 'P', IRON.ingot() });
 		addShapelessAuto(new ItemStack(ModBlocks.barrel_iron, 1), new Object[] { ModBlocks.barrel_corroded, ANY_TAR.any() });
@@ -791,7 +781,7 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(ModItems.plate_cast, 1, Mats.MAT_STEEL.id), new Object[] { ModBlocks.hadron_plating_voltz });
 		addShapelessAuto(DictFrame.fromOne(ModItems.circuit, EnumCircuitType.ADVANCED), new Object[] { ModBlocks.hadron_analysis });
 		addShapelessAuto(DictFrame.fromOne(ModItems.circuit, EnumCircuitType.ADVANCED), new Object[] { ModBlocks.hadron_analysis_glass });
-		
+
 		addRecipeAuto(new ItemStack(ModBlocks.hadron_coil_alloy, 1), new Object[] { "WW", "WW", 'W', ALLOY.wireDense() });
 		//addRecipeAuto(new ItemStack(ModBlocks.hadron_coil_gold, 1), new Object[] { "WG", "GW", 'W', ALLOY.wireDense(), 'G', GOLD.wireDense() });
 		//addRecipeAuto(new ItemStack(ModBlocks.hadron_coil_neodymium, 1), new Object[] { "WG", "GW", 'W', ND.wireDense(), 'G', GOLD.wireDense() });
@@ -1171,29 +1161,29 @@ public class CraftingManager {
 			List<IRecipe> toDestroy = new ArrayList();
 
 			List recipeList = net.minecraft.item.crafting.CraftingManager.getInstance().getRecipeList();
-			
+
 			synchronized(recipeList) { //this is how threading works. i think.
 				for(Object o : recipeList) {
-	
+
 					if(o instanceof IRecipe) {
 						IRecipe rec = (IRecipe)o;
 						ItemStack stack = rec.getRecipeOutput();
-	
+
 						for(ItemStack target : targets) {
 							if(stack != null && stack.getItem() == target.getItem() && stack.getItemDamage() == target.getItemDamage()) toDestroy.add(rec);
 						}
 					}
 				}
-	
+
 				if(toDestroy.size() > 0) {
 					recipeList.removeAll(toDestroy);
 				}
-	
+
 				if(Loader.isModLoaded("Mekanism")) {
 					Item disassembler = (Item) Item.itemRegistry.getObject("Mekanism:AtomicDisassembler");
 					if(disassembler != null) addRecipeAuto(new ItemStack(disassembler, 1), "GAG", "EIE", " I ", 'G', GOLD.plateCast(), 'A', "alloyUltimate", 'E', "battery", 'I', "ingotRefinedObsidian");
 				}
-	
+
 				if(Loader.isModLoaded("MekanismGenerators")) {
 					Block generator = (Block) Block.blockRegistry.getObject("MekanismGenerators:Generator");
 					if(generator != null) addRecipeAuto(new ItemStack(generator, 1, 6), " T ", "TAT", "BCB", 'T', TI.plateCast(), 'A', "alloyAdvanced", 'B', "battery", 'C', ANY_PLASTIC.ingot());
