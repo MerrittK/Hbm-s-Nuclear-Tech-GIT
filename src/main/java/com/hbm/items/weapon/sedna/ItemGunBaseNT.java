@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import com.hbm.config.GeneralConfig;
 import com.hbm.handler.HbmKeybinds.EnumKeybind;
 import com.hbm.interfaces.IItemHUD;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.gui.GUIWeaponTable;
-import com.hbm.items.IEquipReceiver;
 import com.hbm.items.IKeybindReceiver;
 import com.hbm.items.weapon.sedna.hud.IHUDComponent;
 import com.hbm.items.weapon.sedna.mags.IMagazine;
@@ -42,11 +42,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 
-public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipReceiver, IItemHUD {
+public class ItemGunBaseNT extends Item implements IKeybindReceiver, IItemHUD {
 
 	/** Timestamp for rendering smoke nodes and muzzle flashes */
 	public long[] lastShot;
@@ -94,6 +95,7 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 	public static final String KEY_LOCKONTARGET = "lockontarget";
 	public static final String KEY_LOCKEDON = "lockedon";
 	public static final String KEY_CANCELRELOAD = "cancel";
+	public static final String KEY_EQUIPPED = "eqipped";
 	
 	public static ConcurrentHashMap<EntityLivingBase, AudioWrapper> loopedSounds = new ConcurrentHashMap();
 
@@ -103,6 +105,7 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 	/** NEVER ACCESS DIRECTLY - USE GETTER */
 	protected GunConfig[] configs_DNA;
 	
+	public Function<ItemStack, String> LAMBDA_NAME_MUTATOR;
 	public WeaponQuality quality;
 	
 	public GunConfig getConfig(ItemStack stack, int index) {
@@ -143,6 +146,21 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 		JAMMED,		//forced delay due to jamming
 	}
 	
+	public ItemGunBaseNT setNameMutator(Function<ItemStack, String> lambda) {
+		this.LAMBDA_NAME_MUTATOR = lambda;
+		return this;
+	}
+
+	public String getItemStackDisplayName(ItemStack stack) {
+		
+		if(this.LAMBDA_NAME_MUTATOR != null) {
+			String unloc = this.LAMBDA_NAME_MUTATOR.apply(stack);
+			if(unloc != null) return (StatCollector.translateToLocal(unloc + ".name")).trim();
+		}
+		
+		return super.getItemStackDisplayName(stack);
+	}
+	
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean ext) {
 		
@@ -174,7 +192,7 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 		case DEBUG: list.add((BobMathUtil.getBlink() ? EnumChatFormatting.YELLOW : EnumChatFormatting.GOLD) + "DEBUG"); break;
 		}
 		
-		if(Minecraft.getMinecraft().currentScreen instanceof GUIWeaponTable) {
+		if(Minecraft.getMinecraft().currentScreen instanceof GUIWeaponTable && !this.recognizedMods.isEmpty()) {
 			list.add(EnumChatFormatting.RED + "Accepts:");
 			for(ComparableStack comp : this.recognizedMods) list.add(EnumChatFormatting.RED + "  " + comp.toStack().getDisplayName());
 		}
@@ -210,7 +228,6 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 		}
 	}
 
-	@Override
 	public void onEquip(EntityPlayer player, ItemStack stack) {
 		for(int i = 0; i < this.configs_DNA.length; i++) {
 			playAnimation(player, stack, AnimType.EQUIP, i);
@@ -272,6 +289,17 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 			}
 			return;
 		}
+		
+		/// ON EQUIP ///
+		if(player != null) {
+			boolean wasHeld = this.getIsEquipped(stack);
+			
+			if(!wasHeld && isHeld && player != null) {
+				this.onEquip(player, stack);
+			}
+		}
+		
+		this.setIsEquipped(stack, isHeld);
 		
 		/// RESET WHEN NOT EQUIPPED ///
 		if(!isHeld) {
@@ -341,6 +369,9 @@ public class ItemGunBaseNT extends Item implements IKeybindReceiver, IEquipRecei
 	// RELOAD CANCEL //
 	public static boolean getReloadCancel(ItemStack stack) { return getValueBool(stack, KEY_CANCELRELOAD); }
 	public static void setReloadCancel(ItemStack stack, boolean value) { setValueBool(stack, KEY_CANCELRELOAD, value); }
+	// EQUIPPED //
+	public static boolean getIsEquipped(ItemStack stack) { return getValueBool(stack, KEY_EQUIPPED); }
+	public static void setIsEquipped(ItemStack stack, boolean value) { setValueBool(stack, KEY_EQUIPPED, value); }
 	
 	
 	/// UTIL ///

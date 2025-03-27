@@ -8,10 +8,20 @@ import java.util.List;
 import com.google.common.collect.HashBiMap;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.items.ModItems;
+import com.hbm.items.weapon.sedna.BulletConfig;
 import com.hbm.items.weapon.sedna.ItemGunBaseNT;
+import com.hbm.items.weapon.sedna.factory.XFactory9mm;
+import com.hbm.items.weapon.sedna.factory.GunFactory.EnumModCaliber;
 import com.hbm.items.weapon.sedna.factory.GunFactory.EnumModGeneric;
 import com.hbm.items.weapon.sedna.factory.GunFactory.EnumModSpecial;
 import com.hbm.items.weapon.sedna.factory.GunFactory.EnumModTest;
+import com.hbm.items.weapon.sedna.factory.XFactory22lr;
+import com.hbm.items.weapon.sedna.factory.XFactory357;
+import com.hbm.items.weapon.sedna.factory.XFactory44;
+import com.hbm.items.weapon.sedna.factory.XFactory45;
+import com.hbm.items.weapon.sedna.factory.XFactory50;
+import com.hbm.items.weapon.sedna.factory.XFactory556mm;
+import com.hbm.items.weapon.sedna.factory.XFactory762mm;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -48,17 +58,23 @@ public class WeaponModManager {
 		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_test, 1, EnumModTest.DAMAGE.ordinal())).addDefault(TEST_DAMAGE);
 		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_test, 1, EnumModTest.MULTI.ordinal())).addDefault(TEST_MULTI);
 
+		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_test, 1, EnumModTest.OVERRIDE_2_5.ordinal())).addDefault(new WeaponModOverride(3, 2.5F, "OVERRIDE"));
+		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_test, 1, EnumModTest.OVERRIDE_5.ordinal())).addDefault(new WeaponModOverride(4, 5F, "OVERRIDE"));
+		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_test, 1, EnumModTest.OVERRIDE_7_5.ordinal())).addDefault(new WeaponModOverride(5, 7.5F, "OVERRIDE"));
+		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_test, 1, EnumModTest.OVERRIDE_10.ordinal())).addDefault(new WeaponModOverride(6, 10F, "OVERRIDE"));
+		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_test, 1, EnumModTest.OVERRIDE_12_5.ordinal())).addDefault(new WeaponModOverride(7, 12_5F, "OVERRIDE"));
+		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_test, 1, EnumModTest.OVERRIDE_15.ordinal())).addDefault(new WeaponModOverride(8, 15F, "OVERRIDE"));
+		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_test, 1, EnumModTest.OVERRIDE_20.ordinal())).addDefault(new WeaponModOverride(9, 20F, "OVERRIDE"));
+
 		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_generic, 1, EnumModGeneric.IRON_DAMAGE.ordinal())).addMod(ModItems.gun_pepperbox, new WeaponModGenericDamage(100));
 		new WeaponModDefinition(new ItemStack(ModItems.weapon_mod_generic, 1, EnumModGeneric.IRON_DURA.ordinal())).addMod(ModItems.gun_pepperbox, new WeaponModGenericDurability(101));
 
 		Item[] steelGuns = new Item[] {
-				ModItems.gun_light_revolver,
-				ModItems.gun_light_revolver_atlas,
+				ModItems.gun_light_revolver, ModItems.gun_light_revolver_atlas,
 				ModItems.gun_henry,
 				ModItems.gun_henry_lincoln,
 				ModItems.gun_greasegun,
-				ModItems.gun_maresleg,
-				ModItems.gun_maresleg_akimbo,
+				ModItems.gun_maresleg, ModItems.gun_maresleg_akimbo,
 				ModItems.gun_flaregun };
 		Item[] duraGuns = new Item[] {
 				ModItems.gun_am180,
@@ -69,8 +85,7 @@ public class WeaponModManager {
 		Item[] deshGuns = new Item[] {
 				ModItems.gun_heavy_revolver,
 				ModItems.gun_carbine,
-				ModItems.gun_uzi,
-				ModItems.gun_uzi_akimbo,
+				ModItems.gun_uzi, ModItems.gun_uzi_akimbo,
 				ModItems.gun_spas12,
 				ModItems.gun_panzerschreck };
 		Item[] wsteelGuns = new Item[] {
@@ -79,8 +94,7 @@ public class WeaponModManager {
 				ModItems.gun_chemthrower };
 		Item[] ferroGuns = new Item[] {
 				ModItems.gun_m2,
-				ModItems.gun_autoshotgun,
-				ModItems.gun_autoshotgun_shredder,
+				ModItems.gun_autoshotgun, ModItems.gun_autoshotgun_shredder,
 				ModItems.gun_quadro };
 		Item[] tcalloyGuns = new Item[] {
 				ModItems.gun_lag,
@@ -121,12 +135,50 @@ public class WeaponModManager {
 		new WeaponModDefinition(EnumModSpecial.GREASEGUN).addMod(ModItems.gun_greasegun, new WeaponModGreasegun(ID_GREASEGUN_CLEAN));
 		new WeaponModDefinition(EnumModSpecial.SLOWDOWN).addMod(ModItems.gun_minigun, new WeaponModSlowdown(207));
 		new WeaponModDefinition(EnumModSpecial.SPEEDUP)
-			.addMod(ModItems.gun_minigun, new WeaponModMinigunSpeedup(208))
+			.addMod(ModItems.gun_minigun, new WeaponModMinigunSpeedup(ID_MINIGUN_SPEED))
 			.addMod(new Item[] {ModItems.gun_autoshotgun, ModItems.gun_autoshotgun_shredder}, new WeaponModShredderSpeedup(209));
 		new WeaponModDefinition(EnumModSpecial.CHOKE).addMod(new Item[] {ModItems.gun_pepperbox, ModItems.gun_maresleg, ModItems.gun_double_barrel, ModItems.gun_liberator, ModItems.gun_spas12}, new WeaponModChoke(210));
 		new WeaponModDefinition(EnumModSpecial.FURNITURE_GREEN).addMod(ModItems.gun_g3, new WeaponModPolymerFurniture(ID_FURNITURE_GREEN));
 		new WeaponModDefinition(EnumModSpecial.FURNITURE_BLACK).addMod(ModItems.gun_g3, new WeaponModPolymerFurniture(ID_FURNITURE_BLACK));
 		new WeaponModDefinition(EnumModSpecial.BAYONET).addMod(ModItems.gun_mas36, new WeaponModMASBayonet(ID_MAS_BAYONET));
+		new WeaponModDefinition(EnumModSpecial.STACK_MAG).addMod(new Item[] {ModItems.gun_greasegun, ModItems.gun_uzi, ModItems.gun_uzi_akimbo, ModItems.gun_aberrator, ModItems.gun_aberrator_eott}, new WeaponModStackMag(214));
+		new WeaponModDefinition(EnumModSpecial.SKIN_SATURNITE).addMod(new Item[] {ModItems.gun_uzi, ModItems.gun_uzi_akimbo}, new WeaponModUziSaturnite(ID_UZI_SATURN));
+
+		BulletConfig[] p9 = new BulletConfig[] {XFactory9mm.p9_sp, XFactory9mm.p9_fmj, XFactory9mm.p9_jhp, XFactory9mm.p9_ap};
+		BulletConfig[] p45 = new BulletConfig[] {XFactory45.p45_sp, XFactory45.p45_fmj, XFactory45.p45_jhp, XFactory45.p45_ap, XFactory45.p45_du};
+		BulletConfig[] p22 = new BulletConfig[] {XFactory22lr.p22_sp, XFactory22lr.p22_fmj, XFactory22lr.p22_jhp, XFactory22lr.p22_ap};
+		BulletConfig[] m357 = new BulletConfig[] {XFactory357.m357_sp, XFactory357.m357_fmj, XFactory357.m357_jhp, XFactory357.m357_ap, XFactory357.m357_express};
+		BulletConfig[] m44 = new BulletConfig[] {XFactory44.m44_sp, XFactory44.m44_fmj, XFactory44.m44_jhp, XFactory44.m44_ap, XFactory44.m44_express};
+		BulletConfig[] r556 = new BulletConfig[] {XFactory556mm.r556_sp, XFactory556mm.r556_fmj, XFactory556mm.r556_jhp, XFactory556mm.r556_ap};
+		BulletConfig[] r762 = new BulletConfig[] {XFactory762mm.r762_sp, XFactory762mm.r762_fmj, XFactory762mm.r762_jhp, XFactory762mm.r762_ap, XFactory762mm.r762_du, XFactory762mm.r762_he};
+		BulletConfig[] bmg50 = new BulletConfig[] {XFactory50.bmg50_sp, XFactory50.bmg50_fmj, XFactory50.bmg50_jhp, XFactory50.bmg50_ap, XFactory50.bmg50_du, XFactory50.bmg50_he};
+		new WeaponModDefinition(EnumModCaliber.P9)
+			.addMod(ModItems.gun_henry, new WeaponModCaliber(300, 28, 10F, p9));
+		new WeaponModDefinition(EnumModCaliber.P45)
+			.addMod(ModItems.gun_henry, new WeaponModCaliber(310, 28, 10F, p45))
+			.addMod(ModItems.gun_greasegun, new WeaponModCaliber(311, 24, 3F, p45))
+			.addMod(ModItems.gun_uzi, new WeaponModCaliber(312, 24, 3F, p45))
+			.addMod(ModItems.gun_uzi_akimbo, new WeaponModCaliber(313, 24, 3F, p45))
+			.addMod(ModItems.gun_lag, new WeaponModCaliber(314, 15, 25F, p45));
+		new WeaponModDefinition(EnumModCaliber.P22)
+			.addMod(ModItems.gun_henry, new WeaponModCaliber(320, 28, 10F, p22))
+			.addMod(ModItems.gun_uzi, new WeaponModCaliber(321, 40, 3F, p22))
+			.addMod(ModItems.gun_uzi_akimbo, new WeaponModCaliber(322, 40, 3F, p22));
+		new WeaponModDefinition(EnumModCaliber.M357)
+			.addMod(ModItems.gun_henry, new WeaponModCaliber(330, 20, 10F, m357))
+			.addMod(ModItems.gun_lag, new WeaponModCaliber(331, 15, 25F, m357));
+		new WeaponModDefinition(EnumModCaliber.M44)
+			.addMod(ModItems.gun_lag, new WeaponModCaliber(340, 13, 25F, m44));
+		new WeaponModDefinition(EnumModCaliber.R556)
+			.addMod(ModItems.gun_henry, new WeaponModCaliber(350, 10, 10F, r556))
+			.addMod(ModItems.gun_carbine, new WeaponModCaliber(351, 20, 15F, r556))
+			.addMod(ModItems.gun_minigun, new WeaponModCaliber(352, 0, 6F, r556));
+		new WeaponModDefinition(EnumModCaliber.R762)
+			.addMod(ModItems.gun_henry, new WeaponModCaliber(360, 8, 10F, r762))
+			.addMod(ModItems.gun_g3, new WeaponModCaliber(361, 24, 5F, r762));
+		new WeaponModDefinition(EnumModCaliber.BMG50)
+			.addMod(ModItems.gun_henry, new WeaponModCaliber(370, 5, 10F, bmg50))
+			.addMod(ModItems.gun_minigun, new WeaponModCaliber(371, 0, 6F, bmg50));
 	}
 
 	public static final int ID_SILENCER = 201;
@@ -135,9 +187,11 @@ public class WeaponModManager {
 	public static final int ID_NO_SHIELD = 204;
 	public static final int ID_NO_STOCK = 205;
 	public static final int ID_GREASEGUN_CLEAN = 206;
+	public static final int ID_MINIGUN_SPEED = 208;
 	public static final int ID_FURNITURE_GREEN = 211;
 	public static final int ID_FURNITURE_BLACK = 212;
 	public static final int ID_MAS_BAYONET = 213;
+	public static final int ID_UZI_SATURN = 215;
 	
 	public static ItemStack[] getUpgradeItems(ItemStack stack, int cfg) {
 		if(!stack.hasTagCompound()) return new ItemStack[0];
@@ -197,12 +251,29 @@ public class WeaponModManager {
 		}
 	}
 	
-	public static boolean isApplicable(ItemStack gun, ItemStack mod, int cfg, boolean checkMutex) {
-		if(gun == null || mod == null) return false; //if either stacks are null
+	public static void onInstallStack(ItemStack gun, ItemStack mod, int cfg) {
+		IWeaponMod newMod = modFromStack(gun, mod, cfg);
+		if(newMod == null) return;
+		newMod.onInstall(gun, mod, cfg);
+	}
+	
+	public static void onUninstallStack(ItemStack gun, ItemStack mod, int cfg) {
+		IWeaponMod newMod = modFromStack(gun, mod, cfg);
+		if(newMod == null) return;
+		newMod.onUninstall(gun, mod, cfg);
+	}
+	
+	public static IWeaponMod modFromStack(ItemStack gun, ItemStack mod, int cfg) {
+		if(gun == null || mod == null) return null;
 		WeaponModDefinition def = stackToMod.get(new ComparableStack(mod));
-		if(def == null) return false; //if the mod stack doesn't have a mod definition
-		IWeaponMod newMod = def.modByGun.get(new ComparableStack(gun));
-		if(newMod == null) newMod = def.modByGun.get(null); //if there's no per-gun mod, default to null key
+		if(def == null) return null;
+		IWeaponMod newMod = def.modByGun.get(new ComparableStack(gun).makeSingular()); //shift clicking causes the gun to have stack size 0!
+		if(newMod == null) newMod = def.modByGun.get(null);
+		return newMod;
+	}
+	
+	public static boolean isApplicable(ItemStack gun, ItemStack mod, int cfg, boolean checkMutex) {
+		IWeaponMod newMod = modFromStack(gun, mod, cfg);
 		if(newMod == null) return false; //if there's just no mod applicable
 		
 		if(checkMutex) for(int i : gun.stackTagCompound.getIntArray(KEY_MOD_LIST + cfg)) {
@@ -250,13 +321,15 @@ public class WeaponModManager {
 		}
 		
 		public WeaponModDefinition(EnumModGeneric num) {
-			this.stack = new ItemStack(ModItems.weapon_mod_generic, 1, num.ordinal());
-			stackToMod.put(new ComparableStack(stack), this);
+			this(new ItemStack(ModItems.weapon_mod_generic, 1, num.ordinal()));
 		}
 		
 		public WeaponModDefinition(EnumModSpecial num) {
-			this.stack = new ItemStack(ModItems.weapon_mod_special, 1, num.ordinal());
-			stackToMod.put(new ComparableStack(stack), this);
+			this(new ItemStack(ModItems.weapon_mod_special, 1, num.ordinal()));
+		}
+		
+		public WeaponModDefinition(EnumModCaliber num) {
+			this(new ItemStack(ModItems.weapon_mod_caliber, 1, num.ordinal()));
 		}
 
 		public WeaponModDefinition addMod(ItemStack gun, IWeaponMod mod) { return addMod(new ComparableStack(gun), mod); }
