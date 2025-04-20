@@ -343,6 +343,7 @@ public class ModItems {
 	public static Item safety_fuse;
 	public static Item part_generic;
 	public static Item item_secret;
+	public static Item ingot_metal;
 	public static Item chemical_dye;
 	public static Item crayon;
 
@@ -834,7 +835,6 @@ public class ModItems {
 	public static Item particle_lutece;
 
 	public static Item pellet_antimatter;
-	public static Item singularity_micro;
 	public static Item singularity;
 	public static Item singularity_counter_resonant;
 	public static Item singularity_super_heated;
@@ -2370,6 +2370,7 @@ public class ModItems {
 		safety_fuse = new Item().setUnlocalizedName("safety_fuse").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":safety_fuse");
 		part_generic = new ItemGenericPart().setUnlocalizedName("part_generic").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":part_generic");
 		item_secret = new ItemEnumMulti(EnumSecretType.class, true, true).setUnlocalizedName("item_secret").setCreativeTab(null).setTextureName(RefStrings.MODID + ":item_secret");
+		ingot_metal = new ItemEnumMulti(EnumIngotMetal.class, true, true).setUnlocalizedName("ingot_metal").setCreativeTab(null).setTextureName(RefStrings.MODID + ":ingot_metal");
 		chemical_dye = new ItemChemicalDye().setUnlocalizedName("chemical_dye").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":chemical_dye");
 		crayon = new ItemCrayon().setUnlocalizedName("crayon").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":crayon");
 
@@ -2434,7 +2435,6 @@ public class ModItems {
 		ingot_bakelite = new ItemCustomLore().setUnlocalizedName("ingot_bakelite").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":ingot_bakelite");
 		ingot_biorubber = new ItemCustomLore().setUnlocalizedName("ingot_biorubber").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":ingot_biorubber");
 		ingot_rubber = new ItemCustomLore().setUnlocalizedName("ingot_rubber").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":ingot_rubber");
-		//ingot_pet = new ItemCustomLore().setUnlocalizedName("ingot_pet").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":ingot_pet");
 		ingot_pc = new ItemCustomLore().setUnlocalizedName("ingot_pc").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":ingot_pc");
 		ingot_pvc = new ItemCustomLore().setUnlocalizedName("ingot_pvc").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":ingot_pvc");
 		ingot_desh = new ItemCustomLore().setUnlocalizedName("ingot_desh").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":ingot_desh");
@@ -2907,7 +2907,6 @@ public class ModItems {
 		particle_sparkticle = new Item().setUnlocalizedName("particle_sparkticle").setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.particle_empty).setTextureName(RefStrings.MODID + ":particle_sparkticle");
 		particle_digamma = new ItemDigamma(60).setUnlocalizedName("particle_digamma").setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.particle_empty).setTextureName(RefStrings.MODID + ":particle_digamma");
 		particle_lutece = new Item().setUnlocalizedName("particle_lutece").setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.particle_empty).setTextureName(RefStrings.MODID + ":particle_lutece");
-		singularity_micro = new ItemDrop().setUnlocalizedName("singularity_micro").setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.nuclear_waste).setTextureName(RefStrings.MODID + ":singularity_micro");
 
 		singularity = new ItemDrop().setUnlocalizedName("singularity").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.nuclear_waste).setTextureName(RefStrings.MODID + ":singularity");
 		singularity_counter_resonant = new ItemDrop().setUnlocalizedName("singularity_counter_resonant").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.nuclear_waste).setTextureName(RefStrings.MODID + ":singularity_alt");
@@ -5576,6 +5575,7 @@ public class ModItems {
 		GameRegistry.registerItem(crayon, crayon.getUnlocalizedName());
 		GameRegistry.registerItem(part_generic, part_generic.getUnlocalizedName());
 		GameRegistry.registerItem(item_secret, item_secret.getUnlocalizedName());
+		GameRegistry.registerItem(ingot_metal, ingot_metal.getUnlocalizedName());
 		GameRegistry.registerItem(parts_legendary, parts_legendary.getUnlocalizedName());
 		GameRegistry.registerItem(gear_large, gear_large.getUnlocalizedName());
 		GameRegistry.registerItem(sawblade, sawblade.getUnlocalizedName());
@@ -5745,7 +5745,6 @@ public class ModItems {
 		GameRegistry.registerItem(particle_lutece, particle_lutece.getUnlocalizedName());
 
 		//Singularities, black holes and other cosmic horrors
-		GameRegistry.registerItem(singularity_micro, singularity_micro.getUnlocalizedName());
 		GameRegistry.registerItem(singularity, singularity.getUnlocalizedName());
 		GameRegistry.registerItem(singularity_counter_resonant, singularity_counter_resonant.getUnlocalizedName());
 		GameRegistry.registerItem(singularity_super_heated, singularity_super_heated.getUnlocalizedName());
@@ -6572,7 +6571,6 @@ public class ModItems {
 		GameRegistry.registerItem(schrabidium_hammer, schrabidium_hammer.getUnlocalizedName());
 		GameRegistry.registerItem(shimmer_sledge, shimmer_sledge.getUnlocalizedName());
 		GameRegistry.registerItem(shimmer_axe, shimmer_axe.getUnlocalizedName());
-		//GameRegistry.registerItem(pch, pch.getUnlocalizedName()); //sike, nevermind
 		GameRegistry.registerItem(wood_gavel, wood_gavel.getUnlocalizedName());
 		GameRegistry.registerItem(lead_gavel, lead_gavel.getUnlocalizedName());
 		GameRegistry.registerItem(diamond_gavel, diamond_gavel.getUnlocalizedName());
