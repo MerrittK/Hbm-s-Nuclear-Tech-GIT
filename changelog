@@ -1,3 +1,8 @@
+## Added
+* Laser pistol
+  * Saturnite-tier pistol using capacitors
+  * Also has variants
+
 ## Changed
 * Trenchmaster armor now has the fast reload and more ammo traits again
   * Fast reload now also plays the animation twice as fast
@@ -11,6 +16,17 @@
 * Solar boilers will now show a tooltip when they are too cold
 * Updated the satellite dish structure, due to the new spawn rules it's also no longer obscenely rare
 * The rare small lab structures have been removed and replaced with a new lighthouse
+* ReaSim connectors will no longer function if ReaSim boilers are disabled
+* Updated the placed geiger counter model
+* Updated random gear on hostile mobs, there's now more variety in what armor/weapons mobs can have
+* Removed the cryo cannon. It was the last true weapon to use the NT system and may return later
+* Mines will no longer trigger from all ambient creatures (originally just bats) and water creatures
+* Mines can no longer be triggered if a non-air block is above them
+* Moved the cooling tower particle toggle from `hbm.cfg` to the client config, named `COOLING_TOWER_PARTICLES`
+* Updated HSS textures
+* The diesel generator and turbofan will both now halt operation when powered by redstone
+* Infinite batteries will now also drain energy when put into a charging slot
+* TOREX effects now cause the sky to go fullbright again for 10 seconds after they spawn
 
 ## Fixed
 * Fixed fatal gamebreaking hard drive corrupting issue where taurun leggings were misspelled
@@ -18,3 +34,5 @@
 * Fixed special creeper types being able to spawn in other dimensions
 * Fixed modeled armor using weird rotation rules, causing issues with Customizable Player Models
 * Fixed rotation issues for certain blocks using the new structure system
+* Fixed ReaSim water never moving if the reactor is at 20°
+* Fixed strand caster LPS gauge exceeding the limit
