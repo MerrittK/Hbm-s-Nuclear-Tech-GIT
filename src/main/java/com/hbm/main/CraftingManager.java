@@ -278,6 +278,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModBlocks.machine_funnel, 1), new Object[] { "S S", "SRS", " S ", 'S', STEEL.ingot(), 'R', REDSTONE.dust() });
 		addRecipeAuto(new ItemStack(ModBlocks.machine_waste_drum, 1), new Object[] { "LRL", "BRB", "LRL", 'L', PB.ingot(), 'B', Blocks.iron_bars, 'R', ModItems.rod_quad_empty });
 		addRecipeAuto(new ItemStack(ModBlocks.machine_press, 1), new Object[] { "IRI", "IPI", "IBI", 'I', IRON.ingot(), 'R', Blocks.furnace, 'B', IRON.block(), 'P', Blocks.piston });
+		addRecipeAuto(new ItemStack(ModBlocks.machine_epress, 1), new Object[] { "SCS", "SPS", "SBS", 'S', STEEL.plate(), 'C', DictFrame.fromOne(ModItems.circuit, EnumCircuitType.BASIC), 'P', DictFrame.fromOne(ModItems.part_generic, EnumPartType.PISTON_HYDRAULIC), 'B', STEEL.plateCast() });
 		addRecipeAuto(new ItemStack(ModBlocks.machine_ammo_press, 1), new Object[] { "IPI", "C C", "SSS", 'I', IRON.ingot(), 'P', Blocks.piston, 'C', CU.ingot(), 'S', Blocks.stone });
 		addRecipeAuto(new ItemStack(ModBlocks.machine_siren, 1), new Object[] { "SIS", "ICI", "SRS", 'S', STEEL.plate(), 'I', ANY_RUBBER.ingot(), 'C', DictFrame.fromOne(ModItems.circuit, EnumCircuitType.VACUUM_TUBE), 'R', REDSTONE.dust() });
 		addRecipeAuto(new ItemStack(ModBlocks.machine_microwave, 1), new Object[] { "III", "SGM", "IDI", 'I', ModItems.plate_polymer, 'S', STEEL.plate(), 'G', KEY_ANYPANE, 'M', ModItems.magnetron, 'D', ModItems.motor });
@@ -348,7 +349,7 @@ public class CraftingManager {
 			addRecipeAuto(new ItemStack(ModItems.stamp_steel_flat, 1), new Object[] { "III", "SSS", 'I', brick, 'S', STEEL.ingot() });
 			addRecipeAuto(new ItemStack(ModItems.stamp_titanium_flat, 1), new Object[] { "III", "SSS", 'I', brick, 'S', TI.ingot() });
 			addRecipeAuto(new ItemStack(ModItems.stamp_obsidian_flat, 1), new Object[] { "III", "SSS", 'I', brick, 'S', Blocks.obsidian });
-			addRecipeAuto(new ItemStack(ModItems.stamp_desh_flat, 1), new Object[] { "BDB", "DSD", "BDB", 'B', brick, 'D', DESH.ingot(), 'S', FERRO.ingot() });
+			addRecipeAuto(new ItemStack(ModItems.stamp_obsidian_flat, 1), new Object[] { "III", "SSS", 'I', brick, 'S', DESH.ingot() });
 		}
 
 		addRecipeAuto(new ItemStack(ModBlocks.watz_pump, 1), new Object[] { "MPM", "PCP", "PSP", 'M', ModItems.motor_desh, 'P', ANY_RESISTANTALLOY.plateCast(), 'C', DictFrame.fromOne(ModItems.circuit, EnumCircuitType.BISMOID), 'S', ModItems.pipes_steel });
