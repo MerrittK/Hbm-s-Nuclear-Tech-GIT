@@ -218,6 +218,9 @@ public class OreDictManager {
 	public static final DictFrame FIBER = new DictFrame("Fiberglass");
 	public static final DictFrame ASBESTOS = new DictFrame("Asbestos");
 	public static final DictFrame OSMIRIDIUM = new DictFrame("Osmiridium");
+	
+	public static final DictFrame TITET = new DictFrame("TitaniumTetrachloride");
+	
 	/*
 	 * DUST AND GEM ORES
 	 */

@@ -78,7 +78,7 @@ public class CrucibleRecipes extends SerializableRecipe {
 		
 		recipes.add(new CrucibleRecipe(2, "crucible.aa", 2, new ItemStack(ModItems.ingot_advanced_alloy))
 				.inputs(new MaterialStack(Mats.MAT_STEEL, n), new MaterialStack(Mats.MAT_MINGRADE, n))
-				.outputs(new MaterialStack(Mats.MAT_ALLOY, n * 2)));
+				.outputs(new MaterialStack(Mats.MAT_ALLOY, n * 1)));
 		
 		recipes.add(new CrucibleRecipe(3, "crucible.hss", 9, new ItemStack(ModItems.ingot_dura_steel))
 				.inputs(new MaterialStack(Mats.MAT_STEEL, n * 5), new MaterialStack(Mats.MAT_TUNGSTEN, n * 3), new MaterialStack(Mats.MAT_COBALT, n * 1))
@@ -115,6 +115,11 @@ public class CrucibleRecipes extends SerializableRecipe {
 		recipes.add(new CrucibleRecipe(17, "crucible.bscco", 3, new ItemStack(ModItems.ingot_bscco))
 				.inputs(new MaterialStack(Mats.MAT_BISMUTH, n * 2), new MaterialStack(Mats.MAT_STRONTIUM, n * 2), new MaterialStack(Mats.MAT_CALCIUM, n * 2), new MaterialStack(Mats.MAT_COPPER, n * 3))
 				.outputs(new MaterialStack(Mats.MAT_BSCCO, i)));
+		
+		recipes.add(new CrucibleRecipe(18, "crucible.titanium", 3, new ItemStack(ModItems.ingot_titanium))
+				.inputs(new MaterialStack(Mats.MAT_TITET, n * 2), new MaterialStack(Mats.MAT_SODIUM, n * 1))
+				.outputs(new MaterialStack(Mats.MAT_TITANIUM, n * 2)));
+		
 		
 		registerMoldsForNEI();
 	}
