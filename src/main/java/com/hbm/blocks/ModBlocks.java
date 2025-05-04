@@ -69,6 +69,7 @@ public class ModBlocks {
 	public static Block ore_cinnebar;
 	public static Block ore_coltan;
 	public static Block ore_alexandrite;
+	public static Block ore_rutile;
 
 	public static Block ore_bedrock;
 	public static Block ore_volcano;
@@ -108,6 +109,7 @@ public class ModBlocks {
 	public static Block ore_depth_borax;
 	public static Block cluster_depth_iron;
 	public static Block cluster_depth_titanium;
+	public static Block cluster_depth_rutile;
 	public static Block cluster_depth_tungsten;
 
 	public static Block stone_keyhole;
@@ -137,6 +139,7 @@ public class ModBlocks {
 
 	public static Block cluster_iron;
 	public static Block cluster_titanium;
+	public static Block cluster_rutile;
 	public static Block cluster_aluminium;
 	public static Block cluster_copper;
 
@@ -146,6 +149,9 @@ public class ModBlocks {
 	public static Block ore_bedrock_oil;
 	public static Block ore_lignite;
 	public static Block ore_asbestos;
+	
+	
+	
 	@Deprecated public static Block ore_coal_oil;
 	@Deprecated public static Block ore_coal_oil_burning;
 
@@ -1250,9 +1256,12 @@ public class ModBlocks {
 		ore_uranium = new BlockOutgas(Material.rock, true, 5, true).setBlockName("ore_uranium").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_uranium");
 		ore_uranium_scorched = new BlockOutgas(Material.rock, true, 5, true).setBlockName("ore_uranium_scorched").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_uranium_scorched");
 		ore_titanium = new BlockGeneric(Material.rock).setBlockName("ore_titanium").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_titanium");
+		ore_rutile = new BlockGeneric(Material.rock).setBlockName("ore_rutile").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_rutile");
+		
 		ore_sulfur = new BlockOre(Material.rock).setBlockName("ore_sulfur").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_sulfur");
 		ore_thorium = new BlockGeneric(Material.rock).setBlockName("ore_thorium").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_thorium");
-
+		
+		
 		ore_niter = new BlockOre(Material.rock).setBlockName("ore_niter").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_niter");
 		ore_copper = new BlockGeneric(Material.rock).setBlockName("ore_copper").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_copper");
 		ore_tungsten = new BlockGeneric(Material.rock).setBlockName("ore_tungsten").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_tungsten");
@@ -1268,6 +1277,7 @@ public class ModBlocks {
 
 		cluster_iron = new BlockCluster(Material.rock).setBlockName("cluster_iron").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(15.0F).setBlockTextureName(RefStrings.MODID + ":cluster_iron");
 		cluster_titanium = new BlockCluster(Material.rock).setBlockName("cluster_titanium").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(15.0F).setBlockTextureName(RefStrings.MODID + ":cluster_titanium");
+		cluster_rutile = new BlockCluster(Material.rock).setBlockName("cluster_rutile").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(15.0F).setBlockTextureName(RefStrings.MODID + ":cluster_rutile");
 		cluster_aluminium = new BlockCluster(Material.rock).setBlockName("cluster_aluminium").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(15.0F).setBlockTextureName(RefStrings.MODID + ":cluster_aluminium");
 		cluster_copper = new BlockCluster(Material.rock).setBlockName("cluster_copper").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(15.0F).setBlockTextureName(RefStrings.MODID + ":cluster_copper");
 
@@ -1306,6 +1316,7 @@ public class ModBlocks {
 		ore_depth_borax = new BlockDepthOre().setBlockName("ore_depth_borax").setCreativeTab(MainRegistry.blockTab).setBlockTextureName(RefStrings.MODID + ":ore_depth_borax");
 		cluster_depth_iron = new BlockDepthOre().setBlockName("cluster_depth_iron").setCreativeTab(MainRegistry.blockTab).setBlockTextureName(RefStrings.MODID + ":cluster_depth_iron");
 		cluster_depth_titanium = new BlockDepthOre().setBlockName("cluster_depth_titanium").setCreativeTab(MainRegistry.blockTab).setBlockTextureName(RefStrings.MODID + ":cluster_depth_titanium");
+		cluster_depth_rutile = new BlockDepthOre().setBlockName("cluster_depth_rutile").setCreativeTab(MainRegistry.blockTab).setBlockTextureName(RefStrings.MODID + ":cluster_depth_rutile");
 		cluster_depth_tungsten = new BlockDepthOre().setBlockName("cluster_depth_tungsten").setCreativeTab(MainRegistry.blockTab).setBlockTextureName(RefStrings.MODID + ":cluster_depth_tungsten");
 		ore_alexandrite = new BlockDepthOre().setBlockName("ore_alexandrite").setCreativeTab(MainRegistry.blockTab).setBlockTextureName(RefStrings.MODID + ":ore_alexandrite");
 
@@ -2397,6 +2408,8 @@ public class ModBlocks {
 		GameRegistry.registerBlock(ore_uranium_scorched, ore_uranium_scorched.getUnlocalizedName());
 		GameRegistry.registerBlock(ore_thorium, ore_thorium.getUnlocalizedName());
 		GameRegistry.registerBlock(ore_titanium, ore_titanium.getUnlocalizedName());
+		GameRegistry.registerBlock(ore_rutile, ore_rutile.getUnlocalizedName());
+		
 		GameRegistry.registerBlock(ore_sulfur, ore_sulfur.getUnlocalizedName());
 		GameRegistry.registerBlock(ore_niter, ore_niter.getUnlocalizedName());
 		GameRegistry.registerBlock(ore_copper, ore_copper.getUnlocalizedName());
@@ -2422,6 +2435,7 @@ public class ModBlocks {
 		//Stone clusters
 		GameRegistry.registerBlock(cluster_iron, ItemBlockBase.class, cluster_iron.getUnlocalizedName());
 		GameRegistry.registerBlock(cluster_titanium, ItemBlockBase.class, cluster_titanium.getUnlocalizedName());
+		GameRegistry.registerBlock(cluster_rutile, ItemBlockBase.class, cluster_rutile.getUnlocalizedName());
 		GameRegistry.registerBlock(cluster_aluminium, ItemBlockBase.class, cluster_aluminium.getUnlocalizedName());
 		GameRegistry.registerBlock(cluster_copper, ItemBlockBase.class, cluster_copper.getUnlocalizedName());
 
@@ -2465,6 +2479,7 @@ public class ModBlocks {
 		GameRegistry.registerBlock(ore_depth_borax, ItemBlockBase.class, ore_depth_borax.getUnlocalizedName());
 		GameRegistry.registerBlock(cluster_depth_iron, ItemBlockBase.class, cluster_depth_iron.getUnlocalizedName());
 		GameRegistry.registerBlock(cluster_depth_titanium, ItemBlockBase.class, cluster_depth_titanium.getUnlocalizedName());
+		GameRegistry.registerBlock(cluster_depth_rutile, ItemBlockBase.class, cluster_depth_rutile.getUnlocalizedName());
 		GameRegistry.registerBlock(cluster_depth_tungsten, ItemBlockBase.class, cluster_depth_tungsten.getUnlocalizedName());
 		GameRegistry.registerBlock(ore_alexandrite, ItemBlockBase.class, ore_alexandrite.getUnlocalizedName());
 

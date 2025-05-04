@@ -53,8 +53,8 @@ public class RotaryFurnaceRecipes extends SerializableRecipe {
 		
 		recipes.add(new RotaryFurnaceRecipe(new MaterialStack(MAT_ALLOY, INGOT.q(2)), 100, 100, new OreDictStack(MINGRADE.ingot(), 1), new OreDictStack(STEEL.ingot(),2)));
 		
-		recipes.add(new RotaryFurnaceRecipe(new MaterialStack(MAT_TITET, INGOT.q(1)), 100, 100, new FluidStack(Fluids.CHLORINE, 250), new OreDictStack(TI.ore(), 1)));
-		recipes.add(new RotaryFurnaceRecipe(new MaterialStack(MAT_TITET, INGOT.q(1)), 100, 100, new FluidStack(Fluids.CHLORINE, 250), new OreDictStack(TI.fragment(), 9)));
+		recipes.add(new RotaryFurnaceRecipe(new MaterialStack(MAT_TITET, INGOT.q(1)), 100, 100, new FluidStack(Fluids.CHLORINE, 250), new OreDictStack(RUTILE.ore(), 1)));
+		recipes.add(new RotaryFurnaceRecipe(new MaterialStack(MAT_TITET, INGOT.q(1)), 100, 100, new FluidStack(Fluids.CHLORINE, 250), new OreDictStack(RUTILE.dust(), 1)));
 		
 	}
 

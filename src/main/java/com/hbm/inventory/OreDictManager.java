@@ -157,6 +157,7 @@ public class OreDictManager {
 	 */
 	/** TITANIUM */
 	public static final DictFrame TI = new DictFrame("Titanium");
+	public static final DictFrame RUTILE = new DictFrame("Rutile");
 	/** COPPER */
 	public static final DictFrame CU = new DictFrame("Copper");
 	public static final DictFrame MINGRADE = new DictFrame("Mingrade");
@@ -383,6 +384,7 @@ public class OreDictManager {
 		 * STABLE
 		 */
 		TI																	.ingot(ingot_titanium)												.dust(powder_titanium)			.plate(plate_titanium)			.block(block_titanium)		.ore(ore_titanium);
+		RUTILE																.dust(powder_rutile)	.ore(ore_rutile);
 		CU																	.ingot(ingot_copper)												.dust(powder_copper)			.plate(plate_copper)			.block(block_copper)		.ore(ore_copper, ore_gneiss_copper);
 		MINGRADE															.ingot(ingot_red_copper)											.dust(powder_red_copper)										.block(block_red_copper);
 		ALLOY																.ingot(ingot_advanced_alloy)										.dust(powder_advanced_alloy)	.plate(plate_advanced_alloy)	.block(block_advanced_alloy);
