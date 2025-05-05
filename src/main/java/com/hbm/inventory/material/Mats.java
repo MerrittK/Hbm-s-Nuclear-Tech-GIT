@@ -166,7 +166,7 @@ public class Mats {
 	public static final NTMMaterial MAT_HARDPLASTIC	= makeNonSmeltable(_ES + 04, 		PC,				0xEDE7C4, 0x908A67, 0xE1DBB8).setAutogen(STOCK, GRIP).n();
 	public static final NTMMaterial MAT_PVC			= makeNonSmeltable(_ES + 05, 		PVC,			0xFCFCFC, 0x9F9F9F, 0xF0F0F0).setAutogen(STOCK, GRIP).n();
 	
-	public static final NTMMaterial MAT_TITET		= makeAdditive(2202,			TITET,			0xF7F3F2, 0x4F4C4B, 0xF0F0F0).m();
+	public static final NTMMaterial MAT_TITET		= makeSmeltable(2202,			TITET,			0xF7F3F2, 0x4F4C4B, 0xF0F0F0).m();
 	public static final NTMMaterial MAT_RUTILE		= makeNonSmeltable(2201,		RUTILE,				0xD27F82, 0x98434d, 0xD27F82).setAutogen(FRAGMENT, DUST).m();
 
 	public static NTMMaterial makeSmeltable(int id, DictFrame dict, int color) { return makeSmeltable(id, dict, color, color, color); }
