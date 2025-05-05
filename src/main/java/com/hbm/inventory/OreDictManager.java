@@ -463,7 +463,7 @@ public class OreDictManager {
 		 */
 		LI	.hydro(1F)	.ingot(lithium)	.dustSmall(powder_lithium_tiny)	.dust(powder_lithium)	.block(block_lithium)	.ore(ore_gneiss_lithium);
 		NA	.hydro(1F)													.dust(powder_sodium);
-
+		NACL 															.dust(powder_salt)								.ore(ore_rocksalt);
 		/*
 		 * PHOSPHORUS
 		 */
