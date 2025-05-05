@@ -229,6 +229,7 @@ public class OreDictManager {
 	public static final DictFrame S = new DictFrame("Sulfur");
 	/** SALTPETER/NITER */
 	public static final DictFrame KNO = new DictFrame("Saltpeter");
+	
 	/** FLUORITE */
 	public static final DictFrame F = new DictFrame("Fluorite");
 	public static final DictFrame LIGNITE = new DictFrame("Lignite");
@@ -254,6 +255,8 @@ public class OreDictManager {
 	public static final DictFrame LI = new DictFrame("Lithium");
 	/** SODIUM */
 	public static final DictFrame NA = new DictFrame("Sodium");
+	
+	public static final DictFrame NACL = new DictFrame("Salt");
 	/*
 	 * PHOSPHORUS
 	 */

@@ -117,8 +117,8 @@ public class CrucibleRecipes extends SerializableRecipe {
 				.outputs(new MaterialStack(Mats.MAT_BSCCO, i)));
 		
 		recipes.add(new CrucibleRecipe(18, "crucible.titanium", 3, new ItemStack(ModItems.ingot_titanium))
-				.inputs(new MaterialStack(Mats.MAT_TITET, n * 2), new MaterialStack(Mats.MAT_SODIUM, n * 1))
-				.outputs(new MaterialStack(Mats.MAT_TITANIUM, n * 2)));
+				.inputs(new MaterialStack(Mats.MAT_TITET, i * 1), new MaterialStack(Mats.MAT_SODIUM, n*3))
+				.outputs(new MaterialStack(Mats.MAT_TITANIUM, i * 1)));
 		
 		
 		registerMoldsForNEI();
