@@ -10,6 +10,7 @@ import com.hbm.inventory.container.ContainerMachineChemicalPlant;
 import com.hbm.inventory.fluid.Fluids;
 import com.hbm.inventory.fluid.tank.FluidTank;
 import com.hbm.inventory.gui.GUIMachineChemicalPlant;
+import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.items.machine.ItemMachineUpgrade.UpgradeType;
 import com.hbm.lib.Library;
 import com.hbm.module.ModuleMachineChemplant;
@@ -17,6 +18,7 @@ import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.IUpgradeInfoProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.BobMathUtil;
+import com.hbm.util.fauxpointtwelve.DirPos;
 import com.hbm.util.i18n.I18nUtil;
 
 import api.hbm.energymk2.IEnergyReceiverMK2;
@@ -26,6 +28,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
@@ -38,8 +41,7 @@ public class TileEntityMachineChemicalPlant extends TileEntityMachineBase implem
 	
 	public long power;
 	public long maxPower = 1_000_000;
-	public int progress;
-	public int maxProgress;
+	public boolean didProcess = false;
 
 	public ModuleMachineChemplant chemplantModule;
 	public UpgradeManagerNT upgradeManager = new UpgradeManagerNT(this);
@@ -55,7 +57,10 @@ public class TileEntityMachineChemicalPlant extends TileEntityMachineBase implem
 		}
 		
 		this.chemplantModule = new ModuleMachineChemplant(0, this, slots)
-				.iInput(4, 5, 6).iOutput(7, 8, 9);
+				.itemInput(4, 5, 6)
+				.itemOutput(7, 8, 9)
+				.fluidInput(inputTanks[0], inputTanks[1], inputTanks[2])
+				.fluidOutput(outputTanks[0], outputTanks[1], outputTanks[2]);
 	}
 
 	@Override
@@ -70,12 +75,47 @@ public class TileEntityMachineChemicalPlant extends TileEntityMachineBase implem
 			
 			this.power = Library.chargeTEFromItems(slots, 0, power, maxPower);
 			upgradeManager.checkSlots(slots, 2, 3);
+
+			inputTanks[0].loadTank(10, 13, slots);
+			inputTanks[1].loadTank(11, 14, slots);
+			inputTanks[2].loadTank(12, 15, slots);
+
+			outputTanks[0].unloadTank(16, 19, slots);
+			outputTanks[1].unloadTank(17, 20, slots);
+			outputTanks[2].unloadTank(18, 21, slots);
+			
+			for(DirPos pos : getConPos()) {
+				this.trySubscribe(worldObj, pos);
+				for(FluidTank tank : inputTanks) if(tank.getTankType() != Fluids.NONE) this.trySubscribe(tank.getTankType(), worldObj, pos);
+				for(FluidTank tank : outputTanks) if(tank.getFill() > 0) this.tryProvide(tank, worldObj, pos);
+			}
+			
+			this.chemplantModule.update();
+			this.didProcess = this.chemplantModule.didProcess;
+			if(this.chemplantModule.markDirty) this.markDirty();
 			
 			this.networkPackNT(100);
 			
 		} else {
 			
 		}
+	}
+	
+	public DirPos[] getConPos() {
+		return new DirPos[] {
+				new DirPos(xCoord + 2, yCoord, zCoord - 1, Library.POS_X),
+				new DirPos(xCoord + 2, yCoord, zCoord + 0, Library.POS_X),
+				new DirPos(xCoord + 2, yCoord, zCoord + 1, Library.POS_X),
+				new DirPos(xCoord - 2, yCoord, zCoord - 1, Library.NEG_X),
+				new DirPos(xCoord - 2, yCoord, zCoord + 0, Library.NEG_X),
+				new DirPos(xCoord - 2, yCoord, zCoord + 1, Library.NEG_X),
+				new DirPos(xCoord - 1, yCoord, zCoord + 2, Library.POS_Z),
+				new DirPos(xCoord + 0, yCoord, zCoord + 2, Library.POS_Z),
+				new DirPos(xCoord + 1, yCoord, zCoord + 2, Library.POS_Z),
+				new DirPos(xCoord - 1, yCoord, zCoord - 2, Library.NEG_Z),
+				new DirPos(xCoord + 0, yCoord, zCoord - 2, Library.NEG_Z),
+				new DirPos(xCoord + 1, yCoord, zCoord - 2, Library.NEG_Z),
+		};
 	}
 
 	@Override
@@ -85,8 +125,7 @@ public class TileEntityMachineChemicalPlant extends TileEntityMachineBase implem
 		for(FluidTank tank : outputTanks) tank.serialize(buf);
 		buf.writeLong(power);
 		buf.writeLong(maxPower);
-		buf.writeInt(progress);
-		buf.writeInt(maxProgress);
+		this.chemplantModule.serialize(buf);
 	}
 
 	@Override
@@ -96,8 +135,7 @@ public class TileEntityMachineChemicalPlant extends TileEntityMachineBase implem
 		for(FluidTank tank : outputTanks) tank.deserialize(buf);
 		this.power = buf.readLong();
 		this.maxPower = buf.readLong();
-		this.progress = buf.readInt();
-		this.maxProgress = buf.readInt();
+		this.chemplantModule.deserialize(buf);
 	}
 	
 	@Override
@@ -109,7 +147,7 @@ public class TileEntityMachineChemicalPlant extends TileEntityMachineBase implem
 			this.outputTanks[i].readFromNBT(nbt, "o" + i);
 		}
 		
-		this.chemplantModule.fInput(inputTanks[0], inputTanks[1], inputTanks[2]).fOutput(outputTanks[0], outputTanks[1], outputTanks[2]);
+		this.chemplantModule.readFromNBT(nbt);
 	}
 	
 	@Override
@@ -120,6 +158,18 @@ public class TileEntityMachineChemicalPlant extends TileEntityMachineBase implem
 			this.inputTanks[i].writeToNBT(nbt, "i" + i);
 			this.outputTanks[i].writeToNBT(nbt, "o" + i);
 		}
+		
+		this.chemplantModule.writeToNBT(nbt);
+	}
+
+	@Override
+	public boolean isItemValidForSlot(int slot, ItemStack stack) {
+		if(slot == 0) return true; // battery
+		if(slot >= 2 && slot <= 3 && stack.getItem() instanceof ItemMachineUpgrade) return true; // upgrades
+		if(slot >= 10 && slot <= 12) return true; // input fluid
+		if(slot >= 16 && slot <= 18) return true; // output fluid
+		if(this.chemplantModule.isItemValid(slot, stack)) return true; // recipe input crap
+		return false;
 	}
 
 	@Override public long getPower() { return power; }
@@ -137,7 +187,12 @@ public class TileEntityMachineChemicalPlant extends TileEntityMachineBase implem
 
 	@Override
 	public void receiveControl(NBTTagCompound data) {
-		
+		if(data.hasKey("index") && data.hasKey("selection")) {
+			int index = data.getInteger("index");
+			String selection = data.getString("selection");
+			if(index == 0) this.chemplantModule.recipe = selection;
+			this.markChanged();
+		}
 	}
 	
 	AxisAlignedBB bb = null;
