@@ -95,7 +95,9 @@ public class BlockOre extends Block {
 		if(this == ModBlocks.block_meteor_molten) {
 			return null;
 		}
-
+		if(this == ModBlocks.ore_rocksalt) {
+			return ModItems.powder_salt;
+		}
 		return Item.getItemFromBlock(this);
 	}
 
@@ -122,7 +124,9 @@ public class BlockOre extends Block {
 		if(this == ModBlocks.ore_nether_cobalt) {
 			return 5 + rand.nextInt(8);
 		}
-
+		if(this == ModBlocks.ore_rocksalt) {
+			return 2 + rand.nextInt(2);
+		}
 		return 1;
 	}
 	

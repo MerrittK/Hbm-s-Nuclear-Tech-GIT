@@ -157,6 +157,7 @@ public class OreDictManager {
 	 */
 	/** TITANIUM */
 	public static final DictFrame TI = new DictFrame("Titanium");
+	public static final DictFrame RUTILE = new DictFrame("Rutile");
 	/** COPPER */
 	public static final DictFrame CU = new DictFrame("Copper");
 	public static final DictFrame MINGRADE = new DictFrame("Mingrade");
@@ -218,6 +219,9 @@ public class OreDictManager {
 	public static final DictFrame FIBER = new DictFrame("Fiberglass");
 	public static final DictFrame ASBESTOS = new DictFrame("Asbestos");
 	public static final DictFrame OSMIRIDIUM = new DictFrame("Osmiridium");
+	
+	public static final DictFrame TITET = new DictFrame("TitaniumTetrachloride");
+	
 	/*
 	 * DUST AND GEM ORES
 	 */
@@ -225,6 +229,7 @@ public class OreDictManager {
 	public static final DictFrame S = new DictFrame("Sulfur");
 	/** SALTPETER/NITER */
 	public static final DictFrame KNO = new DictFrame("Saltpeter");
+	
 	/** FLUORITE */
 	public static final DictFrame F = new DictFrame("Fluorite");
 	public static final DictFrame LIGNITE = new DictFrame("Lignite");
@@ -250,6 +255,8 @@ public class OreDictManager {
 	public static final DictFrame LI = new DictFrame("Lithium");
 	/** SODIUM */
 	public static final DictFrame NA = new DictFrame("Sodium");
+	
+	public static final DictFrame NACL = new DictFrame("Salt");
 	/*
 	 * PHOSPHORUS
 	 */
@@ -380,6 +387,7 @@ public class OreDictManager {
 		 * STABLE
 		 */
 		TI																	.ingot(ingot_titanium)												.dust(powder_titanium)			.plate(plate_titanium)			.block(block_titanium)		.ore(ore_titanium);
+		RUTILE																.dust(powder_rutile)	.ore(ore_rutile);
 		CU																	.ingot(ingot_copper)												.dust(powder_copper)			.plate(plate_copper)			.block(block_copper)		.ore(ore_copper, ore_gneiss_copper);
 		MINGRADE															.ingot(ingot_red_copper)											.dust(powder_red_copper)										.block(block_red_copper);
 		ALLOY																.ingot(ingot_advanced_alloy)										.dust(powder_advanced_alloy)	.plate(plate_advanced_alloy)	.block(block_advanced_alloy);
@@ -455,7 +463,7 @@ public class OreDictManager {
 		 */
 		LI	.hydro(1F)	.ingot(lithium)	.dustSmall(powder_lithium_tiny)	.dust(powder_lithium)	.block(block_lithium)	.ore(ore_gneiss_lithium);
 		NA	.hydro(1F)													.dust(powder_sodium);
-
+		NACL 															.dust(powder_salt)								.ore(ore_rocksalt);
 		/*
 		 * PHOSPHORUS
 		 */

@@ -187,6 +187,7 @@ public class Fluids {
 	public static FluidType SODIUM_ALUMINATE;
 	public static FluidType BAUXITE_SOLUTION;
 	public static FluidType ALUMINA;
+	public static FluidType SALTWATER;
 
 	/* Lagacy names for compatibility purposes */
 	@Deprecated public static FluidType ACID;	//JAOPCA uses this, apparently
@@ -400,7 +401,7 @@ public class Fluids {
 		BAUXITE_SOLUTION =		new FluidType("BAUXITE_SOLUTION",	0xE2560F, 3, 0, 3, EnumSymbol.ACID).addTraits(new FT_Corrosive(40), LIQUID, VISCOUS);
 		ALUMINA =				new FluidType("ALUMINA",			0xDDFFFF, 0, 0, 0, EnumSymbol.NONE).addTraits(LIQUID);
 		AIR =					new FluidType(151, "AIR",			0xE7EAEB, 0, 0, 0, EnumSymbol.NONE).addTraits(GASEOUS);
-
+		SALTWATER =				new FluidType("SALTWATER",		0x6e6eff, 0, 0, 0, EnumSymbol.NONE).addTraits(LIQUID);
 		// ^ ^ ^ ^ ^ ^ ^ ^
 		//ADD NEW FLUIDS HERE
 
@@ -419,6 +420,7 @@ public class Fluids {
 		metaOrder.add(WATER);
 		metaOrder.add(HEAVYWATER);
 		metaOrder.add(HEAVYWATER_HOT);
+		metaOrder.add(SALTWATER);
 		metaOrder.add(LAVA);
 		//steams
 		metaOrder.add(STEAM);

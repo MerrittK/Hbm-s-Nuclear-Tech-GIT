@@ -100,6 +100,8 @@ public class MixerRecipes extends SerializableRecipe {
 								 new MixerRecipe(300, 40).setStack1(new FluidStack(Fluids.SODIUM_ALUMINATE, 150)).setSolid(new ComparableStack(DictFrame.fromOne(ModItems.chunk_ore, ItemEnums.EnumChunkType.CRYOLITE))));
 
 		register(Fluids.PERFLUOROMETHYL, new MixerRecipe(1000, 20).setStack1(new FluidStack(Fluids.PETROLEUM, 1000)).setStack2(new FluidStack(Fluids.UNSATURATEDS, 500)).setSolid(new OreDictStack(F.dust())));
+		
+		register(Fluids.SALTWATER, new MixerRecipe(1_000, 100).setStack1(new FluidStack(Fluids.WATER, 1_000)).setSolid(new OreDictStack(NACL.dust())));
 
 	}
 

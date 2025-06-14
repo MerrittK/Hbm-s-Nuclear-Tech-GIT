@@ -401,6 +401,7 @@ public class ModItems {
 	public static Item crystal_thorium;
 	public static Item crystal_plutonium;
 	public static Item crystal_titanium;
+	public static Item crystal_rutile;
 	public static Item crystal_sulfur;
 	public static Item crystal_niter;
 	public static Item crystal_copper;
@@ -451,6 +452,7 @@ public class ModItems {
 	public static Item powder_gold;
 	public static Item powder_iron;
 	public static Item powder_titanium;
+	public static Item powder_rutile;
 	public static Item powder_tungsten;
 	public static Item powder_uranium;
 	public static Item powder_plutonium;
@@ -488,7 +490,8 @@ public class ModItems {
 	public static Item powder_lithium;
 	public static Item powder_zirconium;
 	public static Item powder_sodium;
-
+	public static Item powder_salt;
+	
 	public static Item powder_australium;
 
 	public static Item powder_dura_steel;
@@ -2574,6 +2577,8 @@ public class ModItems {
 		crystal_thorium = new Item().setUnlocalizedName("crystal_thorium").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":crystal_thorium");
 		crystal_plutonium = new Item().setUnlocalizedName("crystal_plutonium").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":crystal_plutonium");
 		crystal_titanium = new Item().setUnlocalizedName("crystal_titanium").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":crystal_titanium");
+		crystal_rutile = new Item().setUnlocalizedName("crystal_rutile").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":crystal_rutile");
+
 		crystal_sulfur = new Item().setUnlocalizedName("crystal_sulfur").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":crystal_sulfur");
 		crystal_niter = new Item().setUnlocalizedName("crystal_niter").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":crystal_niter");
 		crystal_copper = new Item().setUnlocalizedName("crystal_copper").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":crystal_copper");
@@ -2622,6 +2627,7 @@ public class ModItems {
 		powder_gold = new Item().setUnlocalizedName("powder_gold").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_gold");
 		powder_iron = new Item().setUnlocalizedName("powder_iron").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_iron");
 		powder_titanium = new Item().setUnlocalizedName("powder_titanium").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_titanium");
+		powder_rutile = new Item().setUnlocalizedName("powder_rutile").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_rutile");
 		powder_tungsten = new Item().setUnlocalizedName("powder_tungsten").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_tungsten");
 		powder_uranium = new Item().setUnlocalizedName("powder_uranium").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_uranium");
 		powder_plutonium = new Item().setUnlocalizedName("powder_plutonium").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_plutonium");
@@ -2696,7 +2702,9 @@ public class ModItems {
 		powder_borax = new Item().setUnlocalizedName("powder_borax").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_borax");
 		powder_chlorocalcite = new Item().setUnlocalizedName("powder_chlorocalcite").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_chlorocalcite");
 		powder_molysite = new Item().setUnlocalizedName("powder_molysite").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_molysite");
+		powder_salt = new Item().setUnlocalizedName("powder_salt").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_salt");
 
+		
 		fragment_neodymium = new Item().setUnlocalizedName("fragment_neodymium").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":fragment_neodymium");
 		fragment_cobalt = new Item().setUnlocalizedName("fragment_cobalt").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":fragment_cobalt");
 		fragment_niobium = new Item().setUnlocalizedName("fragment_niobium").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":fragment_niobium");
@@ -5188,6 +5196,7 @@ public class ModItems {
 		GameRegistry.registerItem(powder_ra226, powder_ra226.getUnlocalizedName());
 		GameRegistry.registerItem(powder_at209, powder_at209.getUnlocalizedName());
 		GameRegistry.registerItem(powder_titanium, powder_titanium.getUnlocalizedName());
+		GameRegistry.registerItem(powder_rutile, powder_rutile.getUnlocalizedName());
 		GameRegistry.registerItem(powder_copper, powder_copper.getUnlocalizedName());
 		GameRegistry.registerItem(powder_red_copper, powder_red_copper.getUnlocalizedName());
 		GameRegistry.registerItem(powder_advanced_alloy, powder_advanced_alloy.getUnlocalizedName());
@@ -5269,7 +5278,8 @@ public class ModItems {
 		GameRegistry.registerItem(powder_ash, powder_ash.getUnlocalizedName());
 		GameRegistry.registerItem(powder_limestone, powder_limestone.getUnlocalizedName());
 		GameRegistry.registerItem(powder_cement, powder_cement.getUnlocalizedName());
-
+		GameRegistry.registerItem(powder_salt, powder_salt.getUnlocalizedName());
+		
 		//Powders
 		GameRegistry.registerItem(powder_fire, powder_fire.getUnlocalizedName());
 		GameRegistry.registerItem(powder_ice, powder_ice.getUnlocalizedName());
@@ -5311,6 +5321,7 @@ public class ModItems {
 		GameRegistry.registerItem(crystal_thorium, crystal_thorium.getUnlocalizedName());
 		GameRegistry.registerItem(crystal_plutonium, crystal_plutonium.getUnlocalizedName());
 		GameRegistry.registerItem(crystal_titanium, crystal_titanium.getUnlocalizedName());
+		GameRegistry.registerItem(crystal_rutile, crystal_rutile.getUnlocalizedName());
 		GameRegistry.registerItem(crystal_sulfur, crystal_sulfur.getUnlocalizedName());
 		GameRegistry.registerItem(crystal_niter, crystal_niter.getUnlocalizedName());
 		GameRegistry.registerItem(crystal_copper, crystal_copper.getUnlocalizedName());
