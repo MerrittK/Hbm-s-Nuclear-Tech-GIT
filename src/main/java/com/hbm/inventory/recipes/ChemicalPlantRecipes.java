@@ -2,16 +2,23 @@ package com.hbm.inventory.recipes;
 
 import static com.hbm.inventory.OreDictManager.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
 import com.hbm.inventory.FluidStack;
+import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.OreDictStack;
 import com.hbm.inventory.fluid.Fluids;
 import com.hbm.inventory.recipes.loader.GenericRecipe;
 import com.hbm.inventory.recipes.loader.GenericRecipes;
 import com.hbm.items.ItemEnums.EnumFuelAdditive;
+import com.hbm.items.ItemGenericPart.EnumPartType;
 import com.hbm.items.ModItems;
+import com.hbm.items.machine.ItemFluidIcon;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -130,7 +137,7 @@ public class ChemicalPlantRecipes extends GenericRecipes<GenericRecipe> {
 				.outputItems(new ItemStack(ModBlocks.asphalt, 16)));
 		
 		/// SOLIDS ///
-		this.register(new GenericRecipe("chem.desh").setup(200, 100)
+		this.register(new GenericRecipe("chem.desh").setup(100, 100)
 				.inputItems(new ComparableStack(ModItems.powder_desh_mix))
 				.inputFluids((GeneralConfig.enableLBSM && GeneralConfig.enableLBSMSimpleChemsitry) ?
 								new FluidStack[] {new FluidStack(Fluids.LIGHTOIL, 200)} :
@@ -160,11 +167,11 @@ public class ChemicalPlantRecipes extends GenericRecipes<GenericRecipe> {
 				.inputFluids(new FluidStack(Fluids.UNSATURATEDS, 250, GeneralConfig.enable528 ? 2 : 0), new FluidStack(Fluids.CHLORINE, 250, GeneralConfig.enable528 ? 2 : 0))
 				.outputItems(new ItemStack(ModItems.ingot_pvc, 2)));
 		
-		this.register(new GenericRecipe("chem.kevlar").setup(20, 300)
+		this.register(new GenericRecipe("chem.kevlar").setup(60, 300)
 				.inputFluids(new FluidStack(Fluids.AROMATICS, 200), new FluidStack(Fluids.NITRIC_ACID, 100), new FluidStack(GeneralConfig.enable528 ? Fluids.PHOSGENE : Fluids.CHLORINE, 100))
 				.outputItems(new ItemStack(ModItems.plate_kevlar, 4)));
 		
-		this.register(new GenericRecipe("chem.meth").setup(30, 300)
+		this.register(new GenericRecipe("chem.meth").setup(60, 300)
 				.inputItems(new ComparableStack(Items.wheat), new ComparableStack(Items.dye, 2, 3))
 				.inputFluids(new FluidStack(Fluids.LUBRICANT, 400), new FluidStack(Fluids.PEROXIDE, 500))
 				.outputItems(new ItemStack(ModItems.chocolate, 4)));
@@ -210,6 +217,7 @@ public class ChemicalPlantRecipes extends GenericRecipes<GenericRecipe> {
 				.outputFluids(new FluidStack(Fluids.SCHRABIDIC, 16000)));
 		
 		this.register(new GenericRecipe("chem.schrabidate").setup(150, 5_000)
+				.inputItems(new OreDictStack(IRON.dust()))
 				.inputFluids(new FluidStack(Fluids.SCHRABIDIC, 250))
 				.outputItems(new ItemStack(ModItems.powder_schrabidate)));
 		
@@ -281,6 +289,11 @@ public class ChemicalPlantRecipes extends GenericRecipes<GenericRecipe> {
 				.inputItems(new OreDictStack(KEY_ANYGLASS), new OreDictStack(STEEL.bolt(), 4))
 				.outputItems(new ItemStack(ModBlocks.reinforced_laminate)));
 		
+		this.register(new GenericRecipe("chem.polarized").setup(100, 500)
+				.inputFluids(new FluidStack(Fluids.PETROLEUM, 1_000))
+				.inputItems(new OreDictStack(KEY_ANYPANE))
+				.outputItems(DictFrame.fromOne(ModItems.part_generic, EnumPartType.GLASS_POLARIZED, 16)));
+		
 		/// NUCLEAR PROCESSING ///
 		this.register(new GenericRecipe("chem.yellowcake").setup(250, 500)
 				.inputItems(new OreDictStack(U.billet(), 2), new OreDictStack(S.dust(), 2))
@@ -338,5 +351,21 @@ public class ChemicalPlantRecipes extends GenericRecipes<GenericRecipe> {
 				.inputFluids(new FluidStack(Fluids.PEROXIDE, 1_000, 5))
 				.outputFluids(new FluidStack(Fluids.DEATH, 1_000, 0)));
 		
+	}
+	
+	public static HashMap getRecipes() {
+		HashMap<Object, Object> recipes = new HashMap<Object, Object>();
+		
+		for(GenericRecipe recipe : INSTANCE.recipeOrderedList) {
+			List input = new ArrayList();
+			if(recipe.inputItem != null) for(AStack stack : recipe.inputItem) input.add(stack);
+			if(recipe.inputFluid != null) for(FluidStack stack : recipe.inputFluid) input.add(ItemFluidIcon.make(stack));
+			List output = new ArrayList();
+			if(recipe.outputItem != null) for(IOutput stack : recipe.outputItem) output.add(stack.getAllPossibilities());
+			if(recipe.outputFluid != null) for(FluidStack stack : recipe.outputFluid) output.add(ItemFluidIcon.make(stack));
+			recipes.put(input.toArray(), output.toArray());
+		}
+		
+		return recipes;
 	}
 }

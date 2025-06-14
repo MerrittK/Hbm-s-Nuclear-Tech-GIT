@@ -15,7 +15,6 @@ import com.hbm.handler.HTTPHandler;
 import com.hbm.handler.HazmatRegistry;
 import com.hbm.handler.HbmKeybinds;
 import com.hbm.handler.ImpactWorldHandler;
-import com.hbm.handler.HbmKeybinds.EnumKeybind;
 import com.hbm.hazard.HazardSystem;
 import com.hbm.interfaces.IHoldableWeapon;
 import com.hbm.interfaces.IItemHUD;
@@ -36,7 +35,6 @@ import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.toserver.AuxButtonPacket;
-import com.hbm.packet.toserver.KeybindPacket;
 import com.hbm.render.anim.HbmAnimations;
 import com.hbm.render.anim.HbmAnimations.Animation;
 import com.hbm.render.block.ct.CTStitchReceiver;
@@ -68,6 +66,7 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
@@ -86,6 +85,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -1027,7 +1027,7 @@ public class ModEventHandlerClient {
 		return null;
 	}
 
-	public static boolean renderLodeStar = false; // GENUINELY shut the fuck up i'm not kidding
+	public static boolean renderLodeStar = false;
 	public static long lastStarCheck = 0L;
 
 	@SideOnly(Side.CLIENT)
@@ -1064,22 +1064,23 @@ public class ModEventHandlerClient {
 			long millis = Clock.get_ms();
 
 			if(lastStarCheck + 200 < millis) {
-				renderLodeStar = false; // GENUINELY shut the fuck up i'm not kidding
+				renderLodeStar = false;
 				lastStarCheck = millis;
 
-				if(player != null) { // GENUINELY shut the fuck up i'm not kidding
-					Vec3NT pos = new Vec3NT(player.posX, player.posY, player.posZ); // GENUINELY shut the fuck up i'm not kidding
-					Vec3NT lodestarHeading = new Vec3NT(0, 0, -1D).rotateAroundXDeg(-15).multiply(25); // GENUINELY shut the fuck up i'm not kidding
-					Vec3NT nextPos = new Vec3NT(pos).add(lodestarHeading.xCoord,lodestarHeading.yCoord, lodestarHeading.zCoord); // GENUINELY shut the fuck up i'm not kidding
-					MovingObjectPosition mop = world.func_147447_a(pos, nextPos, false, true, false); // GENUINELY shut the fuck up i'm not kidding
-					if(mop != null && mop.typeOfHit == mop.typeOfHit.BLOCK && world.getBlock(mop.blockX, mop.blockY, mop.blockZ) == ModBlocks.glass_polarized) { // GENUINELY shut the fuck up i'm not kidding
-						renderLodeStar = true; // GENUINELY shut the fuck up i'm not kidding
+				if(player != null) {
+					Vec3NT pos = new Vec3NT(player.posX, player.posY, player.posZ);
+					Vec3NT lodestarHeading = new Vec3NT(0, 0, -1D).rotateAroundXDeg(-15).multiply(25);
+					Vec3NT nextPos = new Vec3NT(pos).add(lodestarHeading.xCoord,lodestarHeading.yCoord, lodestarHeading.zCoord);
+					MovingObjectPosition mop = world.func_147447_a(pos, nextPos, false, true, false);
+					if(mop != null && mop.typeOfHit == mop.typeOfHit.BLOCK && world.getBlock(mop.blockX, mop.blockY, mop.blockZ) == ModBlocks.glass_polarized) {
+						renderLodeStar = true;
 					}
 				}
 			}
 		}
 
-		if(event.phase == Phase.START) {
+		// ???
+		/*if(event.phase == Phase.START) {
 
 			Minecraft mc = Minecraft.getMinecraft();
 
@@ -1095,6 +1096,28 @@ public class ModEventHandlerClient {
 					}
 				}
 			}
+		}*/
+	}
+
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		EntityPlayer player = event.player;
+
+		int x = MathHelper.floor_double(player.posX);
+		int y = MathHelper.floor_double(player.posY);
+		int z = MathHelper.floor_double(player.posZ);
+		Block b = player.worldObj.getBlock(x, y, z);
+
+		// Support climbing freestanding vines and chains using spacebar
+		if (
+			b.isLadder(player.worldObj, x, y, z, player) &&
+			b.getCollisionBoundingBoxFromPool(player.worldObj, x, y, z) == null &&
+			!player.capabilities.isFlying &&
+			GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindJump) &&
+			player.motionY < 0.15
+		) {
+			player.motionY = 0.15;
 		}
 	}
 

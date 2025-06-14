@@ -88,6 +88,8 @@ public abstract class GenericRecipes<T extends GenericRecipe> extends Serializab
 	public void writeRecipe(Object recipeObject, JsonWriter writer) throws IOException {
 		T recipe = (T) recipeObject;
 		
+		writer.name("name").value(recipe.name);
+		
 		if(this.inputItemLimit() > 0 && recipe.inputItem != null) {
 			writer.name("inputItem").beginArray();
 			for(AStack stack : recipe.inputItem) this.writeAStack(stack, writer);
@@ -161,6 +163,7 @@ public abstract class GenericRecipes<T extends GenericRecipe> extends Serializab
 		public ItemStack collapse();
 		/** Returns an itemstack only if possibleMultiOutput is false, null otherwise */
 		public ItemStack getSingle();
+		public ItemStack[] getAllPossibilities();
 		public void serialize(JsonWriter writer) throws IOException;
 		public void deserialize(JsonArray array);
 		public String[] getLabel();
@@ -192,6 +195,7 @@ public abstract class GenericRecipes<T extends GenericRecipe> extends Serializab
 		
 		@Override public ItemStack getSingle() { return this.stack; }
 		@Override public boolean possibleMultiOutput() { return false; }
+		@Override public ItemStack[] getAllPossibilities() { return new ItemStack[] {getSingle()}; }
 		
 		@Override
 		public void serialize(JsonWriter writer) throws IOException {
@@ -240,6 +244,12 @@ public abstract class GenericRecipes<T extends GenericRecipe> extends Serializab
 		@Override public ItemStack collapse() { return ((ChanceOutput) WeightedRandom.getRandomItem(RNG, pool)).collapse(); }
 		@Override public boolean possibleMultiOutput() { return pool.size() > 1; }
 		@Override public ItemStack getSingle() { return possibleMultiOutput() ? null : pool.get(0).getSingle(); }
+		
+		@Override public ItemStack[] getAllPossibilities() {
+			ItemStack[] outputs = new ItemStack[pool.size()];
+			for(int i = 0; i < outputs.length; i++) outputs[i] = pool.get(i).getAllPossibilities()[0];
+			return outputs;
+		}
 		
 		@Override
 		public void serialize(JsonWriter writer) throws IOException {
